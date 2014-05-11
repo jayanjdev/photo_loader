@@ -1,15 +1,9 @@
-require 'listen'
-
 class PhotoLoader
-  extend Forwardable
 
-  def initialize(dirs)
-    @listener = Listen.to(dirs) do |modified, added, removed|
-      puts "modified absolute path: #{modified}"
-      puts "added absolute path: #{added}"
-      puts "removed absolute path: #{removed}"
-    end
+  def initialize(file, black_hole_manger)
+    @black_hole_manager = black_hole_manger
+    @file = file
+    @black_hole_manager.found(file)
   end
-  def_delegators :@listener, :start
 end
 

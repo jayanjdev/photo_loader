@@ -1,2 +1,3 @@
 data/*
 log/*
+config/database.yml

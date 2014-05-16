@@ -1,5 +1,4 @@
 require_relative 'config/environment'
-
 desc "Automatic Photo Loader"
 task :photo_detector, [ :directories ] do |t, args|
   p_detector =  PhotoDetector.new(args.directories.split(";"))
@@ -32,12 +31,11 @@ namespace :db do
       puts e.backtrace.inspect
     else
       results = ActiveRecord::Base.connection.execute("SHOW DATABASES;")
-      p results.inspect
       results = results.map{ |r| r }.flatten
       if results.include?(@config['database'])
         ActiveRecord::Base.logger.info("Database #{@config['database']} created.")
       else
-        ActiveRecord::Base.logger.info("Database #{@config['database']} not found on server, but there was no error reported.")
+        ActiveRecord::Base.logger.error("Database #{@config['database']} not found on server, but there was no error reported.")
       end
     ensure
       ActiveRecord::Base.connection.disconnect!
@@ -52,7 +50,11 @@ namespace :db do
   desc 'Migrate the database (options: VERSION=x, VERBOSE=false).'
   task :migrate => :configure_connection do
     ActiveRecord::Migration.verbose = true
-    ActiveRecord::Migrator.migrate MIGRATIONS_DIR, ENV['VERSION'] ? ENV['VERSION'].to_i : nil
+    begin
+      results = ActiveRecord::Migrator.migrate MIGRATIONS_DIR, ENV['VERSION'] ? ENV['VERSION'].to_i : nil
+    rescue Exception => e
+      p e.inspect
+    end
   end
 
   desc 'Rolls the schema back to the previous version (specify steps w/ STEP=n).'

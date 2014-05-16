@@ -1,6 +1,6 @@
 class Pnotos< ActiveRecord::Migration
   def self.up
-    create_table :photos |t|
+    create_table :photos do |t|
       t.string :location
       t.string :type
       t.datetime :click_date

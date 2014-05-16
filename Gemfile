@@ -1,6 +1,7 @@
 
 source 'https://rubygems.org'
 
+gem 'debugger', :group => :development
 gem 'listen'
 gem 'mysql2'
 gem 'activerecord'

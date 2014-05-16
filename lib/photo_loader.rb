@@ -1,3 +1,5 @@
+require 'model/photo'
+
 class PhotoLoader
 
   def initialize(file, black_hole_manger)
@@ -5,5 +7,17 @@ class PhotoLoader
     @file = file
     @black_hole_manager.found(file)
   end
+
+  def purge
+
+  end
+
+  def manual_purge
+  end
+
+  def load
+    Photo.new(@file, self)
+  end
+
 end
 

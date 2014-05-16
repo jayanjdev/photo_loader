@@ -1,5 +1,3 @@
-require 'model/photo'
-
 class PhotoLoader
 
   def initialize(file, black_hole_manger)

@@ -1,5 +1,3 @@
-require 'listen'
-
 class PhotoDetector
   extend Forwardable
 

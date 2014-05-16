@@ -1,5 +1,3 @@
-require 'listen'
-
 class BlackHoleManager
 
   def initialize(dirs)

@@ -1,4 +1,5 @@
 require_relative 'config/environment'
+
 desc "Automatic Photo Loader"
 task :photo_detector, [ :directories ] do |t, args|
   p_detector =  PhotoDetector.new(args.directories.split(";"))

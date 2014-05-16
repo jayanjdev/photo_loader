@@ -32,10 +32,12 @@ namespace :db do
       puts e.backtrace.inspect
     else
       results = ActiveRecord::Base.connection.execute("SHOW DATABASES;")
-      if results.each(&:name).include(@config['database'])
-        ActiveRecord::Base.logger("Database #{@config['database']} created.")
+      p results.inspect
+      results = results.map{ |r| r }.flatten
+      if results.include?(@config['database'])
+        ActiveRecord::Base.logger.info("Database #{@config['database']} created.")
       else
-        ActiveRecord::Base.logger("Database #{@config['database']} not found on server, but there was no error reported.")
+        ActiveRecord::Base.logger.info("Database #{@config['database']} not found on server, but there was no error reported.")
       end
     ensure
       ActiveRecord::Base.connection.disconnect!

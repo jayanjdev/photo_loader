@@ -2,3 +2,4 @@ data/*
 log/*
 config/database.yml
 *.swp
+tags

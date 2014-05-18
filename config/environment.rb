@@ -2,7 +2,6 @@ require 'active_record'
 require 'yaml'
 require 'logger'
 
-require 'debugger'
 
 MIGRATION_DIR = 'db/migrate'
 LOG_DIR = 'log'

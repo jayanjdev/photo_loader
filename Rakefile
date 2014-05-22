@@ -1,10 +1,11 @@
 require_relative 'config/environment'
 
 desc "Automatic Photo Loader"
-task :photo_detector, [ :directories ] do |t, args|
-  p_detector =  PhotoDetector.new(args.directories.split(";"))
-  p_detector.start
-  sleep
+task :photo_loader, [ :directories ] do |t, args|
+  PhotoLoader::Detector.new(args.directories.split(";")).tap do |p_detector|
+    p_detector.start
+    sleep
+  end
 end
 
 namespace :db do

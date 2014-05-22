@@ -9,3 +9,4 @@ gem 'rspec', :group => :test
 gem 'guard', :group => :test
 gem 'guard-rspec', require: false
 
+gem 'exifr'

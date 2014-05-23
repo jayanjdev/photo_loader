@@ -10,8 +10,9 @@ module PhotoLoader
 
     def load
       begin
+        ::PhotoLoader.logger.info("loadding ... file #{file}")
         photo_file = EXIFR::JPEG.new(file)
-        new_location = Archiver.new(file, photo_file.date_time_original)
+        new_location = PhotoLoader::Archiver.new(file, photo_file.date_time_original).location
         Photo.create(:location => new_location,
                  :type => 'jpeg',
                  :click_date => photo_file.date_time_original)
@@ -19,6 +20,7 @@ module PhotoLoader
         ::PhotoLoader.logger.error("Error loading file #{file}")
         ::PhotoLoader.logger.error(e.inspect)
       else
+        ::PhotoLoader.logger.info("removing... file #{file}")
         @black_hole_manger.remove(file)
       end
     end

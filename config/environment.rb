@@ -6,12 +6,17 @@ require 'exifr'
 
 APP_ENV ||= ENV['APP_ENV'] || 'development'
 
+APP_ROOT = File.join(File.dirname(__FILE__) , '..')
+
 MIGRATION_DIR = 'db/migrate'
-LOG_DIR = 'log'
-TMP_DIR = 'tmp'
-CONFIG_DIR = 'config'
-ARCHIVE_BASE = "data/#{APP_ENV}/photo_archive"
-DATABASE_CONFIG_FILE = "config/database.yml"
+DATABASE_CONFIG_FILE = File.join(APP_ROOT, "config/database.yml") 
+
+DB_LOG_FILE = File.join(APP_ROOT, 'log', "#{APP_ENV}_database.log")
+
+TMP_DIR = File.join(APP_ROOT, 'tmp')
+CONFIG_DIR = File.join(APP_ROOT, 'config')
+
+ARCHIVE_BASE = File.join(APP_ROOT, "data/#{APP_ENV}/photo_archive")
  
 
 require_relative '../models/photo'
@@ -23,7 +28,8 @@ require_relative '../lib/application'
 
 module PhotoLoader
   def self.logger
-    @logger ||= Logger.new(File.open(LOG_DIR + "/#{APP_ENV}_photo_load_log.log" , 'a+'))
+    @logger ||= Logger.new(File.open(DB_LOG_FILE , 'a+'))
   end
 end
+
 

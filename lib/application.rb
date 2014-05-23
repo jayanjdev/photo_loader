@@ -5,6 +5,7 @@ module PhotoLoader
     end
 
     def self.init
+      ActiveRecord::Base.logger = Logger.new(File.open(DB_LOG_FILE, 'a+'))
       ActiveRecord::Base.establish_connection Application.config
     end
   end

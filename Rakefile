@@ -21,7 +21,7 @@ namespace :db do
 
   task :configure_connection => :configuration do
     ActiveRecord::Base.establish_connection @config
-    ActiveRecord::Base.logger = Logger.new(File.open(@config['logger'], 'a+'))
+    ActiveRecord::Base.logger = Logger.new(File.open(DB_LOG_FILE, 'a+'))
   end
 
   desc 'Create the database from config/database.yml for the current APP_ENV'

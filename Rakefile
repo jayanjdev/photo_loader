@@ -1,7 +1,9 @@
 require_relative 'config/environment'
+require 'debugger'
 
 desc "Automatic Photo Loader"
 task :photo_loader, [ :directories ] do |t, args|
+  PhotoLoader::Application.init 
   PhotoLoader::Detector.new(args.directories.split(";")).tap do |p_detector|
     p_detector.start
     sleep
@@ -10,7 +12,6 @@ end
 
 namespace :db do
   task :environment do
-    APP_ENV = ENV['APP_ENV'] || 'development'
     MIGRATIONS_DIR = ENV['MIGRATIONS_DIR'] || 'db/migrate'
   end
 

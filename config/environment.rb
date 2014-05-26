@@ -24,6 +24,7 @@ require_relative '../lib/black_hole_manager'
 require_relative '../lib/photo_loader'
 require_relative '../lib/photo_detector'
 require_relative '../lib/photo_archiver'
+require_relative '../lib/photo_details_extractor'
 require_relative '../lib/application'
 
 module PhotoLoader

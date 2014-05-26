@@ -1,36 +1,40 @@
 module PhotoLoader
   class Archiver
-    attr_reader :file_original_date 
+    attr_reader :location, :sub_folder, :filename, :src_file_path
 
     def initialize(src_file_path, file_date)
       #data format 2014-03-09 21:39:32 -0700
-     @file_original_date = file_date
-     prep_folder
-     copy_file(src_file_path)
+     @sub_folder= Time.parse(file_date.to_s).strftime("%Y_%m_%d")
+     @filename = Pathname.new(src_file_path).basename.to_s
+     @src_file_path = src_file_path
+    end
+
+    def archive
+      prep_folder
+      @location = copy_file(src_file_path, dst_folder)
+    end
+
+    def copy_file(src_file, dst_folder)
+      ::PhotoLoader.logger.info("copying ... file #{src_file} to #{dst_folder}")
+
+      begin
+        FileUtils.cp(src_file, dst_folder, {preserve: true})
+      rescue Exception => e 
+        ::PhotoLoader.logger.error("copy failed with error #{e.inspect}")
+      else
+        File.join(dst_folder, filename) 
+      end
     end
 
     def dst_folder
-      sub_folder = (file_original_date.is_a?(String) ? Time.parse(file_original_date) : file_original_date).strftime("%Y_%m_%d")
-      @dst_folder ||= ARCHIVE_BASE + '/' + sub_folder
-    end
-
-    def copy_file(f)
-      ::PhotoLoader.logger.info("copying ... file #{f} to #{dst_file_path(f)}")
-      FileUtils.cp(f, dst_file_path(f), {preserve: true})
-    end
-
-    def location
-      @location
-    end
-
-    def dst_file_path(f)
-      @location ||= File.join(dst_folder, Pathname.new(f).basename.to_s)
+      @dst_folder ||= File.join(ARCHIVE_BASE, sub_folder)
     end
 
     def prep_folder
       begin
-        FileUtils.mkdir(dst_folder)
+        FileUtils.mkdir_p(dst_folder)
       rescue Errno::EEXIST
+
       end
     end
   end

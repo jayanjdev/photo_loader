@@ -6,6 +6,7 @@ describe PhotoLoader::BlackHoleManager do
       blk_ho_mgr = PhotoLoader::BlackHoleManager.new('/a')
       blk_ho_mgr.found('a')
       blk_ho_mgr.files.should eql(['a'])
+      FileUtils.should_receive(:rm).with('a')
       blk_ho_mgr.remove('a')
       blk_ho_mgr.files.should eql([])
     end

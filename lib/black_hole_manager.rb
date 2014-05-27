@@ -13,6 +13,7 @@ module PhotoLoader
 
     def remove(f)
       @files.delete(f)
+      FileUtils.rm(f)
     end
   end
 end

@@ -10,7 +10,6 @@ module PhotoLoader
           Loader.new(file, @black_hole_manager).load
         end
         removed.each do |file|
-          @black_hole_manager.remove(file)
         end
       end
     end

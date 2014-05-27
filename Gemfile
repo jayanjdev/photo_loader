@@ -12,5 +12,7 @@ gem 'guard-rspec', require: false
 
 gem 'exifr'
 
-gem 'capistrano'
+gem 'capistrano', '~> 3.1'
+gem 'capistrano-rvm'
+gem 'capistrano-bundler', '~> 1.1.2'
 gem 'railsless-deploy'

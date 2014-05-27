@@ -11,3 +11,6 @@ gem 'guard', :group => :test
 gem 'guard-rspec', require: false
 
 gem 'exifr'
+
+gem 'capistrano'
+gem 'railsless-deploy'
